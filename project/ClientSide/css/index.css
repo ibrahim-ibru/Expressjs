@@ -1,0 +1,80 @@
+body{
+    margin: 0;
+    background-color: rgb(34, 32, 32);
+}
+
+.container{
+    height: 90vh;
+    width: 60%;
+    background-color: azure;
+    margin: auto;
+    margin-top: 2%;
+    border-radius: 20px;
+    padding: 1% 5%;
+}
+
+.container h1{
+    text-align: center;
+    letter-spacing: 10px;
+    word-spacing: 10px;
+    color: rgb(24, 138, 183);
+    font-size: 45px;
+}
+
+.addtodo{
+    height: 15%;
+    align-content: center;
+    background-color: gray;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.addtodo input{
+    background-color: rgb(55, 53, 53);
+    height: 35%;
+    width: 65%;
+    border: 0;
+    color: aliceblue;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.addtodo button{
+    height: 40%;
+    width: 10%;
+    background-color: rgb(27, 74, 149);
+    color: aliceblue;
+    border: 0;
+    margin-left: 5%;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.my-todos{
+    background-color: rgba(68, 150, 182, 0.567);
+    color: aliceblue;
+}
+
+table{
+   width: 100%; 
+   line-height: 30px;
+   margin-top: 30px;
+}
+
+td input{
+    background-color: rgba(124, 199, 228, 0.423);
+    color: aliceblue;
+    border: 0;
+    height: 100%;
+    width: 80%;
+}
+
+td button{
+    height: 25px;
+    padding: 0 10px;
+    background-color: gray;
+    border: 0;
+    border-radius: 5px;
+}
+

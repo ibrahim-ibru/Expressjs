@@ -5,6 +5,7 @@ import todoSchema from "./model/todo.model.js"
 const PORT=3000
 const app=express()
 app.use(express.json())
+app.use(express.static("../ClientSide"))
 
 app.post("/addtodo",async (req,res)=>{
     console.log(req.body);
