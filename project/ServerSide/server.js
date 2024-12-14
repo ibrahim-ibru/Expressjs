@@ -10,6 +10,8 @@ app.use(express.static("../ClientSide"))
 app.post("/addtodo",async (req,res)=>{
     console.log(req.body);
     const{task}=req.body
+    console.log(task);
+    
 
     await todoSchema.create({task,isCompleted:false})
     .then(()=>{
@@ -61,7 +63,7 @@ app.delete("/delete/:_id",async(req,res)=>{
 
 mongoose.connect("mongodb://127.0.0.1:27017")
 .then(()=>{
-    console.log("database Connected");
+    console.log("database Connected successfully");
     app.listen(3000,()=>{
         console.log("server Created");
     })

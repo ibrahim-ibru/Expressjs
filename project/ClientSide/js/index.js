@@ -1,22 +1,24 @@
 async function addTodo() {
     try {
-        const task= document.getElementById("addtodo").value
+        const task= document.getElementById("task").value
         const res= await fetch("http://localhost:3000/addtodo",{
             method:"POST",
-            headers:{"Content-Type":"application/json",
+            headers:{"Content-Type":"application/json"},
                 body:JSON.stringify({task})
-            }
+            
         })
+        console.log(res);
+        
         if(res.status==201){
             const {msg}=await res.json()
             alert(msg)
-            document.getElementById("addtodo").value=""
         }        
         else{
             alert("Not added")
         }
         
-    } catch (error) {
+    } 
+    catch (error) {
         console.log(error);
         
     }
@@ -53,4 +55,4 @@ async function getTodos() {
     }
 }
 
-getTodos()
+// getTodos()
