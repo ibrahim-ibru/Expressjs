@@ -27,18 +27,18 @@ async function getTodos() {
     try {
         const res=await fetch("http://localhost:3000/gettodos")
         console.log(res);
-        if(res.status==201){
+        if(res.status==200){
             const data=await res.json()
             str=``
             data.map((dt)=>{
                 str+=`
                 <table>
                 <tr>
-                    <td style="width: 68%;"><input type="text" value="${dt.task}" id="inptask"></td>
+                    <td style="width: 68%;"><input type="text" disabled=true value="${dt.task}" id="inptask-${dt._id}"></td>
                     <td><button onclick="isCompleted('${dt._id}')">Done</button>
-                    <button onclick="">Edit</button>
-                    <button onclick="">Save</button>
-                    <button onclick="">Delete</button></td>
+                    <button onclick="handleEdit('${dt._id}')">Edit</button>
+                    <button onclick="handleSave('${dt._id}')">Save</button>
+                    <button onclick="handleDelete('${dt._id}')">Delete</button></td>
                 </tr>
                 
             </table>
@@ -55,4 +55,19 @@ async function getTodos() {
     }
 }
 
-// getTodos()
+getTodos()
+
+async function handleEdit(_id) {
+    document.getElementById(`inptask-${_id}`).disabled=false
+    document.getElementById(`inptask-${_id}`).focus()
+}
+
+async function handleDelete(id) {
+    const res=fetch(`http://localhost:3000//delete/${id}`,{
+        method:"DELETE",
+        headers:{"Content-Type":"application/plain"},
+        body:id
+    })
+    console.log(res);
+    
+}
