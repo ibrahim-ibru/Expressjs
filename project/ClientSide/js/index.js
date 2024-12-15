@@ -12,6 +12,7 @@ async function addTodo() {
         if(res.status==201){
             const {msg}=await res.json()
             alert(msg)
+            getTodos()
         }        
         else{
             alert("Not added")
@@ -35,7 +36,7 @@ async function getTodos() {
                 <table>
                 <tr>
                     <td style="width: 68%;"><input type="text" disabled=true value="${dt.task}" id="inptask-${dt._id}"></td>
-                    <td><button onclick="isCompleted('${dt._id}')">Done</button>
+                    <td><button onclick="isCompleted('${dt._id}',${dt.isCompleted})">${dt.isCompleted?"not done":"Done"}</button>
                     <button onclick="handleEdit('${dt._id}')">Edit</button>
                     <button onclick="handleSave('${dt._id}')">Save</button>
                     <button onclick="handleDelete('${dt._id}')">Delete</button></td>
@@ -58,16 +59,48 @@ async function getTodos() {
 getTodos()
 
 async function handleEdit(_id) {
-    document.getElementById(`inptask-${_id}`).disabled=false
-    document.getElementById(`inptask-${_id}`).focus()
+    const task=prompt("Edit Task :")
+    const res=await fetch(`http://localhost:3000/update/${_id}`,{
+        method:"PUT",
+        headers:{"Content-type":"application/json"},
+        body:JSON.stringify({task})
+    })
+    if(res.status==201){
+        const {msg}=await res.json()
+        alert(msg)
+        getTodos()
+    }
 }
 
 async function handleDelete(id) {
-    const res=fetch(`http://localhost:3000//delete/${id}`,{
+    const res=fetch(`http://localhost:3000/delete/${id}`,{
         method:"DELETE",
-        headers:{"Content-Type":"application/plain"},
-        body:id
+        headers:{"Content-Type":"application/json"},
+    })
+    // console.log(res);
+    if((await res).status==200){
+        alert("deleted successfully")
+        getTodos()
+    }
+    
+}
+
+async function isCompleted(_id,isCompleted) {
+    console.log(isCompleted);
+    
+    const res=await fetch(`http://localhost:3000/isCompleted/${_id}/${isCompleted}`,{
+        method:"PUT",
+        headers:{"Content-Type":"application/boolean"},
+        body:JSON.stringify({isCompleted})
     })
     console.log(res);
+    
+    if(res.status==201){
+        console.log(res);
+        console.log("res");
+        
+        // document.getElementById(`inptask-${_id}`).style.textDecoration=`${isCompleted?"line-through":"none"}`
+        getTodos()
+    }
     
 }
