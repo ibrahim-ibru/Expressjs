@@ -1,27 +1,15 @@
 import express from "express"
 import mongoose from "mongoose"
 import todoSchema from "./model/todo.model.js"
+import env from "dotenv"
+import connection from "./connectio.js"
+import router from "./router.js"
 
-const PORT=3000
+env.config()
+
 const app=express()
 app.use(express.json())
-app.use(express.static("../ClientSide"))
-
-app.post("/addtodo",async (req,res)=>{
-    console.log(req.body);
-    const{task}=req.body
-    console.log(task);
-    
-
-    await todoSchema.create({task,isCompleted:false})
-    .then(()=>{
-        // add todo to database
-        res.status(201).send({msg:"successfully added"})
-    })
-    .catch((error)=>{
-        req.status(400).send(error);
-    })
-})
+app.use("/api",router)
 
 app.get("/gettodos",async(req,res)=>{
     try {
@@ -34,28 +22,21 @@ app.get("/gettodos",async(req,res)=>{
 })
 
 // is completed
-app.put("/isCompleted/:_id/:isCompleted",async(req,res)=>{
+app.put("/isCompleted/:_id",async(req,res)=>{
     const {_id}=req.params
-    console.log(req.params);
-    
     const {isCompleted}=req.body
-    console.log(isCompleted);
-    
     await todoSchema.updateOne({_id},{$set:{isCompleted:!isCompleted}})
     .then(()=>{
         res.status(201).send({msg:"successfully updated"})
     })
     .catch((error)=>{
         res.status(500).send(error)
-        
     })
 })
 
 // delete
 
 app.delete("/delete/:_id",async(req,res)=>{
-    console.log("hai");
-    
     const {_id}=req.params
     await todoSchema.deleteOne({_id})
     .then(()=>{
@@ -66,24 +47,10 @@ app.delete("/delete/:_id",async(req,res)=>{
     })
 })
 
-app.put("/update/:_id",async (req,res)=>{
-    const {_id}=req.params
-    const {task}=req.body
-
-    await todoSchema.updateOne({_id},{$set:{task}})
-    .then(()=>{
-        res.status(201).send({msg:"Task updated Successfully"})
-    })
-    .catch((error)=>{
-        res.status(400).send(error)
-    })
-})
 
 
-mongoose.connect("mongodb://127.0.0.1:27017")
-.then(()=>{
-    console.log("database Connected successfully");
-    app.listen(3000,()=>{
+connection().then(()=>{
+    app.listen(process.env.PORT,()=>{
         console.log("server Created");
     })
 })
