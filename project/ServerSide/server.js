@@ -38,7 +38,7 @@ app.put("/isCompleted/:_id/:isCompleted",async(req,res)=>{
     const {_id}=req.params
     console.log(req.params);
     
-    const {isCompleted}=req.params
+    const {isCompleted}=req.body
     console.log(isCompleted);
     
     await todoSchema.updateOne({_id},{$set:{isCompleted:!isCompleted}})

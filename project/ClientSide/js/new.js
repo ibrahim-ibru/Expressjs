@@ -49,7 +49,6 @@ async function getTodos() {
             })
             document.querySelector(".my-todos").innerHTML=str
             document.getElementById(`inptask-${idinp}`).style.textDecoration=`${com?"none":"line-through"}`
-            document.getElementById(`inptask-${idinp}`).style.color=`${com?"":"red"}`
         }
         else{
             alert("data didn't get")
